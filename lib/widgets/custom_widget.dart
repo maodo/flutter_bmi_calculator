@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+
+const buttonColor = 0xFFEC1455;
+ double _currentSliderValue = 0;
 class CustomWidget extends StatelessWidget {
   const CustomWidget({
     Key? key,
@@ -30,10 +33,40 @@ class CustomWidget extends StatelessWidget {
                 "cm",
                 style: TextStyle(fontSize: 25.0, color: Colors.white30),
               ),
-            )
+            ),
           ],
-        )
+        ),
+        CustomSlider()
       ],
+    );
+  }
+}
+
+
+class CustomSlider extends StatefulWidget {
+  const CustomSlider({Key? key}) : super(key: key);
+
+  @override
+  State<CustomSlider> createState() => _CustomSliderState();
+}
+
+class _CustomSliderState extends State<CustomSlider> {
+ 
+  @override
+  Widget build(BuildContext context) {
+    return SliderTheme(data: SliderThemeData(thumbColor:Color(buttonColor),thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15),activeTrackColor: Colors.white ),
+      child: Slider(
+        inactiveColor: Colors.white10,
+        value: _currentSliderValue,
+        max: 200,
+        label: _currentSliderValue.round().toString(),
+        onChanged: (double value) {
+          setState(() {
+            _currentSliderValue = value;
+            print(_currentSliderValue);
+          });
+        },
+      ),
     );
   }
 }

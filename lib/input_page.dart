@@ -2,11 +2,18 @@ import 'package:flutter/material.dart';
 
 import 'widgets/custom_card.dart';
 import 'widgets/custom_widget.dart';
+import 'widgets/icon_widget.dart';
 import 'widgets/reusable_card.dart';
 
-const mainColor = 0xFF1D1E33;
-const secondColor = 0xFF0B0D21;
-const buttonColor = 0xFFEC1455;
+const activeCardColor = Color(0xFF1D1E33);
+const inactiveCardColor = Color(0xFF111328);
+const secondColor = Color(0xFF0B0D21);
+const buttonColor = Color(0xFFEC1455);
+
+enum Gender {
+  male,
+  female,
+}
 
 class InputPage extends StatefulWidget {
   const InputPage({Key? key}) : super(key: key);
@@ -16,6 +23,18 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+  Color maleCardColor = inactiveCardColor;
+  Color femaleCardColor = inactiveCardColor;
+
+  void updateColour(Gender gender) {
+    maleCardColor = (gender == Gender.male && maleCardColor == inactiveCardColor)
+        ? activeCardColor
+        : inactiveCardColor;
+    femaleCardColor = (gender == Gender.female && femaleCardColor == inactiveCardColor)
+        ? activeCardColor
+        : inactiveCardColor;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,59 +45,50 @@ class _InputPageState extends State<InputPage> {
         body: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           Row(children: [
             Expanded(
-                child: ReusableCard(
-              colour: Color(mainColor),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.male,
-                      size: 100.0,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Center(
-                        child: Text(
-                          'MALE',
-                          style: TextStyle(
-                              fontSize: 15.0, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    )
-                  ]),
+                child: GestureDetector(
+              onTap: () => {
+                setState(() => {
+                      updateColour(Gender.male),
+                    })
+              },
+              child: ReusableCard(
+                colour: maleCardColor,
+                child: IconWidget(label: 'male', icon: Icons.male),
+              ),
             )),
             Expanded(
-                child: ReusableCard(
-              colour: Color(mainColor),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.female, size: 100.0),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Center(
-                        child: Text(
-                          'FEMALE',
-                          style: TextStyle(
-                              fontSize: 15.0, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    )
-                  ]),
+                child: GestureDetector(
+              onTap: () => {
+                setState(() => {
+                      updateColour(Gender.female),
+                    })
+              },
+              child: ReusableCard(
+                colour: femaleCardColor,
+                child: IconWidget(label: 'female', icon: Icons.female),
+              ),
             ))
           ]),
           Expanded(
-              child: ReusableCard(
-                  colour: Color(mainColor), child: CustomWidget())),
+              child:
+                  ReusableCard(colour: activeCardColor, child: CustomWidget())),
           Row(children: [
             Expanded(
                 child: ReusableCard(
-              colour: Color(mainColor),
-              child: CustomCard(label: "Weight",value: "74",),
+              colour: activeCardColor,
+              child: CustomCard(
+                label: "Weight",
+                value: "74",
+              ),
             )),
             Expanded(
                 child: ReusableCard(
-                    colour: Color(mainColor), child: CustomCard(label: "Height",value: "183",),)),
+              colour: activeCardColor,
+              child: CustomCard(
+                label: "Age",
+                value: "19",
+              ),
+            )),
           ]),
           Padding(
             padding: const EdgeInsets.only(bottom: 15.0, left: 8.0, right: 8.0),
@@ -88,7 +98,7 @@ class _InputPageState extends State<InputPage> {
                   foregroundColor:
                       MaterialStateProperty.all<Color>(Colors.white),
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(Color(buttonColor))),
+                      MaterialStateProperty.all<Color>(buttonColor)),
               onPressed: () {},
               child: Text(
                 'Calculate your bmi'.toUpperCase(),
@@ -99,10 +109,3 @@ class _InputPageState extends State<InputPage> {
         ]));
   }
 }
-
-
-
-
-
-
-
