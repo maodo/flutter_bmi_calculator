@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 const mainColor = 0xFF1D1E33;
+const secondColor = 0xFF0B0D21;
 const buttonColor = 0xFFEC1455;
 
 class InputPage extends StatefulWidget {
@@ -64,32 +65,16 @@ class _InputPageState extends State<InputPage> {
           ]),
           Expanded(
               child: ReusableCard(
-            colour: Color(mainColor),
-            child: Center(
-              child: Text(
-                'Hello',
-              ),
-            ),
-          )),
+                  colour: Color(mainColor), child: CustomWidget())),
           Row(children: [
             Expanded(
                 child: ReusableCard(
               colour: Color(mainColor),
-              child: Center(
-                child: Text(
-                  'Hello',
-                ),
-              ),
+              child: CustomCard(label: "Weight",value: "74",),
             )),
             Expanded(
                 child: ReusableCard(
-              colour: Color(mainColor),
-              child: Center(
-                child: Text(
-                  'Hello',
-                ),
-              ),
-            )),
+                    colour: Color(mainColor), child: CustomCard(label: "Height",value: "183",),)),
           ]),
           Padding(
             padding: const EdgeInsets.only(bottom: 15.0, left: 8.0, right: 8.0),
@@ -108,6 +93,93 @@ class _InputPageState extends State<InputPage> {
             ),
           )
         ]));
+  }
+}
+
+class CustomCard extends StatelessWidget {
+  CustomCard({required this.label, required this.value});
+  final String label;
+  final String value;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(label.toUpperCase(),
+            style: TextStyle(
+                color: Colors.white30,
+                fontSize: 17.0,
+                fontWeight: FontWeight.bold)),
+        Text(
+          value,
+          style:
+              TextStyle(fontSize: 40.0, fontWeight: FontWeight.bold),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top : 17.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              CustomIconButton(buttonIcon: Icons.remove),
+              CustomIconButton(buttonIcon: Icons.add)
+            ],
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class CustomIconButton extends StatelessWidget {
+  const CustomIconButton({required this.buttonIcon});
+  final IconData buttonIcon;
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () => {},
+      child: Icon(
+        buttonIcon
+      ),
+      style: ElevatedButton.styleFrom(shape: CircleBorder(),primary: Colors.white30,fixedSize:Size(60.0,60.0)),
+    );
+  }
+}
+
+class CustomWidget extends StatelessWidget {
+  const CustomWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "height".toUpperCase(),
+          style: TextStyle(
+              color: Colors.white30,
+              fontSize: 17.0,
+              fontWeight: FontWeight.bold),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "183",
+              style: TextStyle(fontSize: 40.0, fontWeight: FontWeight.bold),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 10.0, left: 2.0),
+              child: Text(
+                "cm",
+                style: TextStyle(fontSize: 25.0, color: Colors.white30),
+              ),
+            )
+          ],
+        )
+      ],
+    );
   }
 }
 
