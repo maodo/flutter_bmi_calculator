@@ -9,6 +9,8 @@ const activeCardColor = Color(0xFF1D1E33);
 const inactiveCardColor = Color(0xFF111328);
 const secondColor = Color(0xFF0B0D21);
 const buttonColor = Color(0xFFEC1455);
+const ageMinLimit = 0;
+const weightMinLimit = 0;
 
 enum Gender {
   male,
@@ -38,6 +40,7 @@ class _InputPageState extends State<InputPage> {
             ? activeCardColor
             : inactiveCardColor;
   }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +108,7 @@ class _InputPageState extends State<InputPage> {
                         children: [
                           CustomIconButton(buttonIcon: Icons.remove, onPressed: () { 
                             setState(() => {
-                              weight--
+                              if(weight > 0) weight--
                             });
                            },),
                           CustomIconButton(buttonIcon: Icons.add, onPressed: () { 
@@ -143,7 +146,7 @@ class _InputPageState extends State<InputPage> {
                       children: [
                         CustomIconButton(buttonIcon: Icons.remove, onPressed: () { 
                           setState(() => {
-                            age--
+                            if(age > 0) age--
                           });
                          },),
                         CustomIconButton(buttonIcon: Icons.add, onPressed: () { 
