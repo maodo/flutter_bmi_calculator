@@ -1,9 +1,12 @@
+
+import 'package:bmi_calculator/widgets/submit_button.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/custom_icon_button.dart';
 import '../widgets/custom_widget.dart';
 import '../widgets/icon_widget.dart';
 import '../widgets/reusable_card.dart';
+import 'results_page.dart';
 
 const activeCardColor = Color(0xFF1D1E33);
 const inactiveCardColor = Color(0xFF111328);
@@ -40,7 +43,6 @@ class _InputPageState extends State<InputPage> {
             ? activeCardColor
             : inactiveCardColor;
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -53,20 +55,20 @@ class _InputPageState extends State<InputPage> {
           Row(children: [
             Expanded(
                 child: ReusableCard(
-                  colour: maleCardColor,
-                  child: IconWidget(label: 'male', icon: Icons.male),
-                  onTap: () => setState(() => {
-                      updateColour(Gender.male),
-                    }),
-                )),
+              colour: maleCardColor,
+              child: IconWidget(label: 'male', icon: Icons.male),
+              onTap: () => setState(() => {
+                    updateColour(Gender.male),
+                  }),
+            )),
             Expanded(
                 child: ReusableCard(
-                  colour: femaleCardColor,
-                  child: IconWidget(label: 'female', icon: Icons.female),
-                  onTap:() => setState(() => {
-                      updateColour(Gender.female),
-                    }),
-                ))
+              colour: femaleCardColor,
+              child: IconWidget(label: 'female', icon: Icons.female),
+              onTap: () => setState(() => {
+                    updateColour(Gender.female),
+                  }),
+            ))
           ]),
           Expanded(
             child: ReusableCard(colour: activeCardColor, child: CustomWidget()),
@@ -98,16 +100,18 @@ class _InputPageState extends State<InputPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          CustomIconButton(buttonIcon: Icons.remove, onPressed: () { 
-                            setState(() => {
-                              if(weight > 0) weight--
-                            });
-                           },),
-                          CustomIconButton(buttonIcon: Icons.add, onPressed: () { 
-                            setState(() => {
-                              weight++
-                            });
-                           },)
+                          CustomIconButton(
+                            buttonIcon: Icons.remove,
+                            onPressed: () {
+                              setState(() => {if (weight > 0) weight--});
+                            },
+                          ),
+                          CustomIconButton(
+                            buttonIcon: Icons.add,
+                            onPressed: () {
+                              setState(() => {weight++});
+                            },
+                          )
                         ],
                       ),
                     )
@@ -136,16 +140,18 @@ class _InputPageState extends State<InputPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        CustomIconButton(buttonIcon: Icons.remove, onPressed: () { 
-                          setState(() => {
-                            if(age > 0) age--
-                          });
-                         },),
-                        CustomIconButton(buttonIcon: Icons.add, onPressed: () { 
-                          setState(() => {
-                            age++
-                          });
-                         },)
+                        CustomIconButton(
+                          buttonIcon: Icons.remove,
+                          onPressed: () {
+                            setState(() => {if (age > 0) age--});
+                          },
+                        ),
+                        CustomIconButton(
+                          buttonIcon: Icons.add,
+                          onPressed: () {
+                            setState(() => {age++});
+                          },
+                        )
                       ],
                     ),
                   )
@@ -153,22 +159,14 @@ class _InputPageState extends State<InputPage> {
               ),
             )),
           ]),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 15.0, left: 8.0, right: 8.0),
-            child: TextButton(
-              style: ButtonStyle(
-                  fixedSize: MaterialStateProperty.all(Size.fromHeight(65.0)),
-                  foregroundColor:
-                      MaterialStateProperty.all<Color>(Colors.white),
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(buttonColor)),
-              onPressed: () {},
-              child: Text(
-                'Calculate your bmi'.toUpperCase(),
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
-              ),
-            ),
+          SubmitButton(
+            label: "Calculate your bmi",
+            onPressed: () {
+              Navigator.push(context,MaterialPageRoute(builder: (context)  => ResultsPage()));
+            }
           )
         ]));
   }
 }
+
+
