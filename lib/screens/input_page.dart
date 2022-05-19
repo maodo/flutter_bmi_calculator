@@ -1,12 +1,11 @@
-
+import 'package:bmi_calculator/utils/calculator_brain.dart';
+import 'package:bmi_calculator/utils/result_arguments.dart';
 import 'package:bmi_calculator/widgets/submit_button.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/custom_icon_button.dart';
-import '../widgets/custom_widget.dart';
 import '../widgets/icon_widget.dart';
 import '../widgets/reusable_card.dart';
-import 'results_page.dart';
 
 const activeCardColor = Color(0xFF1D1E33);
 const inactiveCardColor = Color(0xFF111328);
@@ -30,8 +29,9 @@ class InputPage extends StatefulWidget {
 class _InputPageState extends State<InputPage> {
   Color maleCardColor = inactiveCardColor;
   Color femaleCardColor = inactiveCardColor;
-  int weight = 60;
-  int age = 20;
+  int weight = 74;
+  int age = 19;
+  int height = 180;
 
   void updateColour(Gender gender) {
     maleCardColor =
@@ -71,7 +71,58 @@ class _InputPageState extends State<InputPage> {
             ))
           ]),
           Expanded(
-            child: ReusableCard(colour: activeCardColor, child: CustomWidget()),
+            child: ReusableCard(
+              colour: activeCardColor,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "height".toUpperCase(),
+                    style: TextStyle(
+                        color: Colors.white30,
+                        fontSize: 17.0,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Text(
+                        height.toString(),
+                        style: TextStyle(
+                            fontSize: 40.0, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        "cm",
+                        style: TextStyle(fontSize: 25.0, color: Colors.white30),
+                      ),
+                    ],
+                  ),
+                  SliderTheme(
+                    data: SliderThemeData(
+                        thumbColor: buttonColor,
+                        overlayColor: Color(0x29EB1555),
+                        thumbShape:
+                            RoundSliderThumbShape(enabledThumbRadius: 15),
+                        overlayShape:
+                            RoundSliderOverlayShape(overlayRadius: 30.0),
+                        activeTrackColor: Colors.white),
+                    child: Slider(
+                      inactiveColor: Colors.white10,
+                      value: height.toDouble(),
+                      min: 120.0,
+                      max: 220.0,
+                      onChanged: (double value) {
+                        setState(() {
+                          height = value.round();
+                        });
+                      },
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
           Row(children: [
             Expanded(
@@ -160,13 +211,21 @@ class _InputPageState extends State<InputPage> {
             )),
           ]),
           SubmitButton(
-            label: "Calculate your bmi",
-            onPressed: () {
-              Navigator.push(context,MaterialPageRoute(builder: (context)  => ResultsPage()));
-            }
-          )
+              label: "Calculate your bmi",
+              onPressed: () {
+                CalculatorBrain calc =
+                    CalculatorBrain(height: height, weight: weight);
+                final bmi = calc.calculateBMI();
+                Navigator.pushNamed(
+                  context,
+                  '/result',
+                  arguments: ResultArguments(
+                    result: calc.getResult(),
+                    interpretation: calc.getInterpretation(),
+                    bmi: bmi,
+                  ),
+                );
+              })
         ]));
   }
 }
-
-
