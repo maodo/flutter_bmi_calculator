@@ -52,29 +52,21 @@ class _InputPageState extends State<InputPage> {
         body: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           Row(children: [
             Expanded(
-                child: GestureDetector(
-              onTap: () => {
-                setState(() => {
+                child: ReusableCard(
+                  colour: maleCardColor,
+                  child: IconWidget(label: 'male', icon: Icons.male),
+                  onTap: () => setState(() => {
                       updateColour(Gender.male),
-                    })
-              },
-              child: ReusableCard(
-                colour: maleCardColor,
-                child: IconWidget(label: 'male', icon: Icons.male),
-              ),
-            )),
+                    }),
+                )),
             Expanded(
-                child: GestureDetector(
-              onTap: () => {
-                setState(() => {
+                child: ReusableCard(
+                  colour: femaleCardColor,
+                  child: IconWidget(label: 'female', icon: Icons.female),
+                  onTap:() => setState(() => {
                       updateColour(Gender.female),
-                    })
-              },
-              child: ReusableCard(
-                colour: femaleCardColor,
-                child: IconWidget(label: 'female', icon: Icons.female),
-              ),
-            ))
+                    }),
+                ))
           ]),
           Expanded(
             child: ReusableCard(colour: activeCardColor, child: CustomWidget()),

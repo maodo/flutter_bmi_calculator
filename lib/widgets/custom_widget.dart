@@ -13,7 +13,6 @@ class CustomWidget extends StatefulWidget {
 
 class _CustomWidgetState extends State<CustomWidget> {
   int height = 180;
-  double _currentSliderValue = 120;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,34 +27,33 @@ class _CustomWidgetState extends State<CustomWidget> {
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.baseline,
+          textBaseline: TextBaseline.alphabetic,
           children: [
             Text(
               height.toString(),
               style: TextStyle(fontSize: 40.0, fontWeight: FontWeight.bold),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0, left: 2.0),
-              child: Text(
-                "cm",
-                style: TextStyle(fontSize: 25.0, color: Colors.white30),
-              ),
+            Text(
+              "cm",
+              style: TextStyle(fontSize: 25.0, color: Colors.white30),
             ),
           ],
         ),
         SliderTheme(
           data: SliderThemeData(
               thumbColor: Color(buttonColor),
+              overlayColor: Color(0x29EB1555),
               thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15),
+              overlayShape: RoundSliderOverlayShape(overlayRadius: 30.0),
               activeTrackColor: Colors.white),
           child: Slider(
             inactiveColor: Colors.white10,
-            value: _currentSliderValue,
+            value: height.toDouble(),
             min: 120.0,
             max: 220.0,
-            label: _currentSliderValue.round().toString(),
             onChanged: (double value) {
               setState(() {
-                _currentSliderValue = value;
                 height = value.round();
               });
             },
