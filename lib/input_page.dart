@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'widgets/custom_card.dart';
+import 'widgets/custom_icon_button.dart';
 import 'widgets/custom_widget.dart';
 import 'widgets/icon_widget.dart';
 import 'widgets/reusable_card.dart';
@@ -25,14 +25,18 @@ class InputPage extends StatefulWidget {
 class _InputPageState extends State<InputPage> {
   Color maleCardColor = inactiveCardColor;
   Color femaleCardColor = inactiveCardColor;
+  int weight = 60;
+  int age = 20;
 
   void updateColour(Gender gender) {
-    maleCardColor = (gender == Gender.male && maleCardColor == inactiveCardColor)
-        ? activeCardColor
-        : inactiveCardColor;
-    femaleCardColor = (gender == Gender.female && femaleCardColor == inactiveCardColor)
-        ? activeCardColor
-        : inactiveCardColor;
+    maleCardColor =
+        (gender == Gender.male && maleCardColor == inactiveCardColor)
+            ? activeCardColor
+            : inactiveCardColor;
+    femaleCardColor =
+        (gender == Gender.female && femaleCardColor == inactiveCardColor)
+            ? activeCardColor
+            : inactiveCardColor;
   }
 
   @override
@@ -70,23 +74,87 @@ class _InputPageState extends State<InputPage> {
             ))
           ]),
           Expanded(
-              child:
-                  ReusableCard(colour: activeCardColor, child: CustomWidget())),
+            child: ReusableCard(colour: activeCardColor, child: CustomWidget()),
+          ),
           Row(children: [
             Expanded(
-                child: ReusableCard(
-              colour: activeCardColor,
-              child: CustomCard(
-                label: "Weight",
-                value: "74",
+              child: ReusableCard(
+                colour: activeCardColor,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "weight".toUpperCase(),
+                      style: TextStyle(
+                        color: Colors.white30,
+                        fontSize: 17.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      weight.toString(),
+                      style: TextStyle(
+                        fontSize: 40.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 17.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CustomIconButton(buttonIcon: Icons.remove, onPressed: () { 
+                            setState(() => {
+                              weight--
+                            });
+                           },),
+                          CustomIconButton(buttonIcon: Icons.add, onPressed: () { 
+                            setState(() => {
+                              weight++
+                            });
+                           },)
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
-            )),
+            ),
             Expanded(
                 child: ReusableCard(
               colour: activeCardColor,
-              child: CustomCard(
-                label: "Age",
-                value: "19",
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("age".toUpperCase(),
+                      style: TextStyle(
+                          color: Colors.white30,
+                          fontSize: 17.0,
+                          fontWeight: FontWeight.bold)),
+                  Text(
+                    age.toString(),
+                    style:
+                        TextStyle(fontSize: 40.0, fontWeight: FontWeight.bold),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 17.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CustomIconButton(buttonIcon: Icons.remove, onPressed: () { 
+                          setState(() => {
+                            age--
+                          });
+                         },),
+                        CustomIconButton(buttonIcon: Icons.add, onPressed: () { 
+                          setState(() => {
+                            age++
+                          });
+                         },)
+                      ],
+                    ),
+                  )
+                ],
               ),
             )),
           ]),
